@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 from detector_screw import DetectorScrew
+from detector_circle import DetectorCircle
 
 TARGET_DISTANCE = 130  # 目标距离圆心的距离
 TARGET_Z = 0  # 目标距离平面的高度
@@ -50,7 +51,7 @@ DIST_COEFFS = np.array(
 )
 
 
-def test_with_image(image_path: str):
+def screw_test(image_path: str):
     image = cv2.imread(image_path)
     if image is None:
         print(f"can not read: {image_path}")
@@ -59,6 +60,16 @@ def test_with_image(image_path: str):
     detector = DetectorScrew(TARGET_POINTS_WORLD, SCREW_POINTS_WORLD, CAMERA_MATRIX, DIST_COEFFS)
     print(detector.process_frame(image))
 
+def circle_test(image_rgb_path: str, image_depth_path: str):
+    image_rgb = cv2.imread(image_rgb_path)
+    image_depth = cv2.imread(image_depth_path, cv2.IMREAD_UNCHANGED)
+    if image_rgb is None or image_depth is None:
+        print(f"can not read: {image_rgb_path} or {image_depth_path}")
+        return
+
+    detector = DetectorCircle(TARGET_Z, CAMERA_MATRIX, DIST_COEFFS)
+    print(detector.process_frame(image_rgb, image_depth))
 
 if __name__ == "__main__":
-    test_with_image("data/test.jpg")
+    screw_test("data/frame2/color_000000_rgb.png")
+    circle_test("data/frame2/color_000000_rgb.png", "data/frame2/raw_depth_000000.png")
