@@ -71,5 +71,5 @@ def circle_test(image_rgb_path: str, image_depth_path: str):
     print(detector.process_frame(image_rgb, image_depth))
 
 if __name__ == "__main__":
-    screw_test("data/frame2/color_000000_rgb.png")
+    # screw_test("data/frame2/color_000000_rgb.png")
     circle_test("data/frame2/color_000000_rgb.png", "data/frame2/raw_depth_000000.png")

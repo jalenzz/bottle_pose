@@ -14,7 +14,7 @@ class DetectorCircle:
     def detect_circle(self, image: np.ndarray) -> Tuple[int, int, int]:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 2)
-        _, gray = cv2.threshold(gray, 120, 255, cv2.THRESH_OTSU)
+        _, gray = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)
 
         gray = cv2.bitwise_not(gray)
         gray = cv2.morphologyEx(gray,cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3)))
